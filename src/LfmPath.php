@@ -67,7 +67,7 @@ class LfmPath
             return $this->translateToLfmPath($this->normalizeWorkingDir());
         } elseif ($type == 'url') {
             // storage: files/{user_slug}
-            return $this->helper->getCategoryName() . $this->path('working_dir');
+            return $this->helper->getCategoryName() . str_replace($this->helper->getCategoryName()."/", '', $this->path('working_dir'));
         } elseif ($type == 'storage') {
             // storage: files/{user_slug}
             // storage on windows: files\{user_slug}
@@ -98,7 +98,7 @@ class LfmPath
     {
         $all_folders = array_map(function ($directory_path) {
             return $this->pretty($directory_path);
-        }, $this->storage->directories($this));
+        }, $this->storage->directories($this->path('url')));
 
         $folders = array_filter($all_folders, function ($directory) {
             return $directory->name !== $this->helper->getThumbFolderName();
@@ -155,7 +155,7 @@ class LfmPath
 
         $parent_directories = array_map(function ($directory_path) {
             return app(static::class)->translateToLfmPath($directory_path);
-        }, app(static::class)->dir($parent_dir)->directories());
+        }, app(static::class)->dir($parent_dir)->directories($working_dir));
 
         return in_array($this->path('url'), $parent_directories);
     }

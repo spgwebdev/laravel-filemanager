@@ -312,6 +312,14 @@ function loadItems() {
             .removeAttr('id class')
             .attr('data-id', index);
 
+          template.on('dblclick',function(){
+
+              if(!item.is_image)
+              {
+                goTo(item.url)
+              }
+          })
+
           if (item.thumb_url) {
             var image = $('<div>').css('background-image', 'url("' + item.thumb_url + '?timestamp=' + item.time + '")');
           } else {
@@ -327,6 +335,16 @@ function loadItems() {
       }
       $('#nav-buttons > ul').removeClass('d-none');
       $('#working_dir').val(response.working_dir);
+
+      if(!response.working_dir || response.working_dir == '/')
+      {
+        $('#add-folder').fadeIn(100);
+      }
+      else
+      {
+        $('#add-folder').fadeOut(100);
+      }
+
       console.log('Current working_dir : ' + $('#working_dir').val());
       var atRootFolder = getPreviousDir() == '';
       $('#to-previous').toggleClass('d-none invisible-lg', atRootFolder);
