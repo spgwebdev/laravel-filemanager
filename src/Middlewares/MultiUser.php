@@ -16,7 +16,7 @@ class MultiUser
 
     public function handle($request, Closure $next)
     {
-        if ($this->helper->allowFolderType('user')) {
+        /*if ($this->helper->allowFolderType('user')) {
             $previous_dir = $request->input('working_dir');
             $working_dir = $this->helper->getRootFolder('user');
 
@@ -25,7 +25,7 @@ class MultiUser
             } elseif (! $this->validDir($previous_dir)) {
                 $request->replace(compact('working_dir'));
             }
-        }
+        }*/
 
         return $next($request);
     }
