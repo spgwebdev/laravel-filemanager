@@ -37,6 +37,7 @@ class LfmPath
     public function dir($working_dir)
     {
         $this->working_dir = $working_dir;
+        @setcookie('working_dir',$working_dir,-1, '/');
 
         return $this;
     }
