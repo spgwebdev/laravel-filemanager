@@ -40,7 +40,11 @@ class DeleteController extends LfmController
                 }
             } else {
                 if ($file_to_delete->isImage()) {
-                    $this->lfm->setName($name_to_delete)->thumb()->delete();
+                    try {
+
+                        $this->lfm->setName($name_to_delete)->thumb()->delete();
+                        
+                    } catch (\Exception $e) {}
                 }
             }
 

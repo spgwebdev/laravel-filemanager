@@ -37,7 +37,7 @@ class LfmPath
     public function dir($working_dir)
     {
         $this->working_dir = $working_dir;
-        @setcookie('working_dir',$working_dir,-1, '/');
+        // @setcookie('working_dir',$working_dir,-1, '/');
 
         return $this;
     }
@@ -154,9 +154,12 @@ class LfmPath
         $working_dir = $this->path('working_dir');
         $parent_dir = substr($working_dir, 0, strrpos($working_dir, '/'));
 
+        return $this->storage->getMetadata($working_dir)['type'] == 'dir';
+
+
         $parent_directories = array_map(function ($directory_path) {
             return app(static::class)->translateToLfmPath($directory_path);
-        }, app(static::class)->dir($parent_dir)->directories($working_dir));
+        }, app(static::class)->dir($parent_dir)->directories($parent_dir));
 
         return in_array($this->path('url'), $parent_directories);
     }
